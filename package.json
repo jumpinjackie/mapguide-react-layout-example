@@ -1,0 +1,24 @@
+{
+  "name": "mapguide-react-layout-example",
+  "version": "0.0.1",
+  "description": "An example application using mapguide-react-layout",
+  "license": "MIT",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
+    "watch:dev": "cross-env NODE_ENV=development webpack -w --progress --config webpack.config.js"
+  },
+  "dependencies": {
+    "mapguide-react-layout": "..\\mapguide-react-layout-v0.9.0.tgz",
+    "tslib": "^1.7.0"
+  },
+  "devDependencies": {
+    "cross-env": "^4.0.0",
+    "css-loader": "^0.28.1",
+    "file-loader": "^0.11.1",
+    "style-loader": "^0.17.0",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.1"
+  }
+}
