@@ -38,7 +38,7 @@ module.exports = {
     output: {
         libraryTarget: "var",
         library: "MapGuide",
-        path: path.join(__dirname, 'viewer/dist'),
+        path: path.join(__dirname, 'dist'),
         //filename: '[name].[hash].js',
         filename: '[name].js',
         publicPath: '/',
