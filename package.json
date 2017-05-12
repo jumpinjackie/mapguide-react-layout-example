@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/react-redux": "^4.4.40",
-    "mapguide-react-layout": "^0.8.9-pre.3",
+    "mapguide-react-layout": "^0.8.9-pre.4",
     "tslib": "^1.7.0"
   },
   "devDependencies": {
