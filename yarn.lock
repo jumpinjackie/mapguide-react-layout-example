@@ -1556,9 +1556,9 @@ macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
 
-mapguide-react-layout@^0.8.9-pre.1:
-  version "0.8.9-pre.1"
-  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.8.9-pre.1.tgz#5eb86173bee277bea7bb7725dd25d3daa43d89c3"
+mapguide-react-layout@^0.8.9-pre.2:
+  version "0.8.9-pre.2"
+  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.8.9-pre.2.tgz#3dc46625a227c7064bcf4a922526dd86aaa70743"
   dependencies:
     "@blueprintjs/core" "1.17.0"
     "@types/es6-promise" "0.0.32"
