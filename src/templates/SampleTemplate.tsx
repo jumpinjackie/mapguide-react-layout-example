@@ -124,20 +124,20 @@ export class SampleLayoutTemplate extends React.Component<SampleLayoutTemplatePr
                 <PlaceholderComponent id={DefaultComponentNames.MouseCoordinates} locale={locale} />
                 {/* The scale display component */}
                 <PlaceholderComponent id={DefaultComponentNames.ScaleDisplay} locale={locale} />
-                {/*
-                This component automatically installs polyfill APIs for the AJAX viewer and partial support for the Fusion API, such APIs
-                are accessible from Task Pane content.
-                 */}
-                <ViewerApiShim />
-                {/*
-                This component services modal content display requests and displays such content in floating modal dialogs when requested
-                */}
-                <ModalLauncher />
-                {/*
-                This component services request for displaying flyout menus
-                */}
-                <FlyoutRegionContainer />
             </div>
+            {/*
+            This component automatically installs polyfill APIs for the AJAX viewer and partial support for the Fusion API, such APIs
+            are accessible from Task Pane content.
+                */}
+            <ViewerApiShim />
+            {/*
+            This component services modal content display requests and displays such content in floating modal dialogs when requested
+            */}
+            <ModalLauncher />
+            {/*
+            This component services request for displaying flyout menus
+            */}
+            <FlyoutRegionContainer />
         </div>
     }
 }
