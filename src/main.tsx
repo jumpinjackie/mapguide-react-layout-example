@@ -15,6 +15,7 @@ import { TurquoiseYellowLayoutTemplate } from "mapguide-react-layout/lib/layouts
 import { LimeGoldLayoutTemplate } from "mapguide-react-layout/lib/layouts/limegold";
 import { SlateTemplateLayout } from "mapguide-react-layout/lib/layouts/slate";
 import { MaroonTemplateLayout } from "mapguide-react-layout/lib/layouts/maroon";
+import { SampleLayoutTemplate } from "./templates/SampleTemplate";
 import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
 import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
@@ -29,6 +30,7 @@ registerLayout("turquoise-yellow", () => <TurquoiseYellowLayoutTemplate />);
 registerLayout("limegold", () => <LimeGoldLayoutTemplate />);
 registerLayout("slate", () => <SlateTemplateLayout />);
 registerLayout("maroon", () => <MaroonTemplateLayout />);
+registerLayout("sample-template", () => <SampleLayoutTemplate />);
 initDefaultCommands();
 registerDefaultComponents();
 
