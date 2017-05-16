@@ -9,9 +9,8 @@
     "watch:dev": "cross-env NODE_ENV=development webpack -w --progress --config webpack.config.js"
   },
   "dependencies": {
-    "@types/react-redux": "^4.4.40",
-    "mapguide-react-layout": "^0.8.9-pre.4",
-    "tslib": "^1.7.0"
+    "mapguide-react-layout": "^0.8.9-pre.5",
+    "tslib": "^1.7.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",

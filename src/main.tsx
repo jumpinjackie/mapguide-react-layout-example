@@ -7,14 +7,21 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import proj4 from "proj4";
 
-import { AjaxViewerLayout } from "mapguide-react-layout/lib/layouts/ajax-viewer";
-import { SidebarLayout } from "mapguide-react-layout/lib/layouts/sidebar";
-import { AquaTemplateLayout } from "mapguide-react-layout/lib/layouts/aqua";
-import { TurquoiseYellowTemplateLayout } from "mapguide-react-layout/lib/layouts/turquoise-yellow";
-import { LimeGoldTemplateLayout } from "mapguide-react-layout/lib/layouts/limegold";
-import { SlateTemplateLayout } from "mapguide-react-layout/lib/layouts/slate";
-import { MaroonTemplateLayout } from "mapguide-react-layout/lib/layouts/maroon";
-import { SampleLayoutTemplate } from "./templates/SampleTemplate";
+// Import the standard templates for registration
+//
+// If you don't intend to use certain templates, you can remove the import
+// statements and their template registrations, and the templates will not
+// be included in the viewer bundle (with some size reduction as a result)
+import AjaxViewerLayout from "mapguide-react-layout/lib/layouts/ajax-viewer";
+import SidebarLayout from "mapguide-react-layout/lib/layouts/sidebar";
+import AquaTemplateLayout from "mapguide-react-layout/lib/layouts/aqua";
+import TurquoiseYellowTemplateLayout from "mapguide-react-layout/lib/layouts/turquoise-yellow";
+import LimeGoldTemplateLayout from "mapguide-react-layout/lib/layouts/limegold";
+import SlateTemplateLayout from "mapguide-react-layout/lib/layouts/slate";
+import MaroonTemplateLayout from "mapguide-react-layout/lib/layouts/maroon";
+
+// This is our custom viewer template
+import SampleLayoutTemplate from "./templates/SampleTemplate";
 
 import { initDefaultCommands } from "mapguide-react-layout/lib/api/default-commands";
 import { ApplicationViewModel } from "mapguide-react-layout/lib/entries/application";
@@ -30,6 +37,10 @@ require("mapguide-react-layout/src/styles/index.css");
 bootstrap();
 
 // Register the templates we intend to provide in this viewer. Below is the standard set
+//
+// If you don't intend to use certain templates, you can remove the registration call
+// (and their respective import statement above), and the templates will not be included
+// in the viewer bundle (with some size reduction as a result)
 registerLayout("ajax-viewer", () => <AjaxViewerLayout />);
 registerLayout("sidebar", () => <SidebarLayout />);
 registerLayout("aqua", () => <AquaTemplateLayout />);
@@ -64,7 +75,7 @@ registerCommand("ViewAsKml", {
     //            state of the application (eg. Do we have a selection, Is the viewer busy, what is the current base layer, etc, etc)
     //            is in this state
     // viewer   - The viewer API. Use this to perform map-related actions. However if a redux action exists as well, it is preferable
-    //            to use that instead.
+    //            to use that instead as connected components will be able to auto-update in response.
     invoke: (dispatch, getState, viewer) => {
         const state = getState();
         const mapState = state.mapState;

@@ -2,12 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as Constants from "mapguide-react-layout/lib/constants";
 import { DEFAULT_TOOLBAR_SIZE, TOOLBAR_BACKGROUND_COLOR } from "mapguide-react-layout/lib/components/toolbar";
-import { ToolbarContainer } from "mapguide-react-layout/lib/containers/toolbar";
+import ToolbarContainer from "mapguide-react-layout/lib/containers/toolbar";
 import { PlaceholderComponent, DefaultComponentNames } from "mapguide-react-layout/lib/api/registry/component";
 import { IApplicationState, ReduxDispatch } from "mapguide-react-layout/lib/api/common";
-import { FlyoutRegionContainer } from "mapguide-react-layout/lib/containers/flyout-region";
-import { ViewerApiShim } from "mapguide-react-layout/lib/containers/viewer-shim";
-import { ModalLauncher } from "mapguide-react-layout/lib/containers/modal-launcher";
+import FlyoutRegionContainer from "mapguide-react-layout/lib/containers/flyout-region";
+import ViewerApiShim from "mapguide-react-layout/lib/containers/viewer-shim";
+import ModalLauncher from "mapguide-react-layout/lib/containers/modal-launcher";
 
 const SIDEBAR_WIDTH = 250;
 const TASKPANE_HEIGHT = 500;
@@ -89,14 +89,13 @@ function mapDispatchToProps(dispatch: ReduxDispatch): ISampleLayoutTemplateDispa
 
 /**
  * This react component represents our example viewer template. It subscribes to state in
- * the redux store via the connect() decorator function
+ * the redux store via the connect() function below
  *
  * @export
  * @class SampleLayoutTemplate
  * @extends {React.Component<SampleLayoutTemplateProps, any>}
  */
-@connect(mapStateToProps, mapDispatchToProps)
-export class SampleLayoutTemplate extends React.Component<SampleLayoutTemplateProps, any> {
+class SampleLayoutTemplate extends React.Component<SampleLayoutTemplateProps, any> {
     constructor(props: SampleLayoutTemplateProps) {
         super(props);
     }
@@ -141,3 +140,8 @@ export class SampleLayoutTemplate extends React.Component<SampleLayoutTemplatePr
         </div>
     }
 }
+
+/**
+ * This connects to the redux store and returns the decorated viewer template component
+ */
+export default connect(mapStateToProps, mapDispatchToProps)(SampleLayoutTemplate);
