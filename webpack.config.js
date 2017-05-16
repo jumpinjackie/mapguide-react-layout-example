@@ -65,6 +65,15 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                loader: "source-map-loader",
+                include: [ //These libraries have source maps, use them
+                    path.resolve(__dirname, "node_modules/@blueprintjs"),
+                    path.resolve(__dirname, "node_modules/mapguide-react-layout")
+                ],
+                enforce: "pre"
+            },
+            {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
                 exclude: /(node_modules|test-utils|\.test\.ts$)/
