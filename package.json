@@ -9,18 +9,18 @@
     "watch:dev": "cross-env NODE_ENV=development webpack -w --progress --config webpack.config.js"
   },
   "dependencies": {
-    "mapguide-react-layout": "^0.8.9-pre.5",
+    "mapguide-react-layout": "^0.8.9-pre.7",
     "tslib": "^1.7.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
-    "cross-env": "^4.0.0",
-    "css-loader": "^0.28.1",
+    "cross-env": "^5.0.0",
+    "css-loader": "^0.28.2",
     "file-loader": "^0.11.1",
     "source-map-loader": "^0.2.1",
-    "style-loader": "^0.17.0",
-    "ts-loader": "^2.0.3",
-    "typescript": "^2.3.2",
-    "webpack": "^2.5.1"
+    "style-loader": "^0.18.1",
+    "ts-loader": "^2.1.0",
+    "typescript": "^2.3.3",
+    "webpack": "^2.6.0"
   }
 }

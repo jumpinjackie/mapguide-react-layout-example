@@ -66,7 +66,7 @@ registerCommand("ViewAsKml", {
     enabled: CommandConditions.isNotBusy,
     //This function is invoked when the command (referenced in a toolbar or menu) is clicked.
     //
-    //It receives 3 parameters:
+    //It receives 4 parameters:
     //
     // dispatch - The redux dispatcher function, call this with a pre-defined action creator (anything under lib/actions)
     //            to push new state to the redux application state tree. Components connected to the redux store will
@@ -76,7 +76,9 @@ registerCommand("ViewAsKml", {
     //            is in this state
     // viewer   - The viewer API. Use this to perform map-related actions. However if a redux action exists as well, it is preferable
     //            to use that instead as connected components will be able to auto-update in response.
-    invoke: (dispatch, getState, viewer) => {
+    // parameters - Any additional parameters. If you have loaded an Application Definition, this is generally the widget's
+    //              parsed extension properties
+    invoke: (dispatch, getState, viewer, parameters) => {
         const state = getState();
         const mapState = state.mapState;
         const activeMapName = state.config.activeMapName;
