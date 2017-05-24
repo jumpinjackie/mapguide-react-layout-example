@@ -23,11 +23,15 @@ import MaroonTemplateLayout from "mapguide-react-layout/lib/layouts/maroon";
 // This is our custom viewer template
 import SampleLayoutTemplate from "./templates/SampleTemplate";
 
+// This is our custom component
+import DemoComponent from "./components/Demo";
+
 import { initDefaultCommands } from "mapguide-react-layout/lib/api/default-commands";
 import { ApplicationViewModel } from "mapguide-react-layout/lib/entries/application";
 import { CommandConditions, registerCommand } from "mapguide-react-layout/lib/api/registry/command";
 import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
+import { registerComponentFactory } from "mapguide-react-layout/lib/api/registry/component";
 import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
 
 // This will pull in and embed the core stylesheet into the viewer bundle
@@ -52,6 +56,13 @@ registerLayout("maroon", () => <MaroonTemplateLayout />);
 // Register our custom viewer template
 registerLayout("sample-template", () => <SampleLayoutTemplate />);
 
+// Register our custom component. Registering a custom component allows the component to be:
+//
+//  1. Usable and accessible by name in a PlaceholderComponent (generally required if building custom viewer templates)
+//  2. An eligible candidate component when using component:// pseudo-URIs. You can create an InvokeURL commmand with 
+//     the URL of component://DemoComponent and running the command will render the DemoComponent into the TaskPane or new window
+registerComponentFactory("DemoComponent", () => <DemoComponent />);
+
 // Registers a custom script command. This is the InvokeScript replacement. An InvokeScript command of a Web Layout or
 // Application Definition will invoke this command if it has the same name. This viewer ignores any script content defined
 // in the origial command definition
@@ -74,8 +85,8 @@ registerCommand("ViewAsKml", {
     // getState - A helper function to get the current application state tree. Everything you want to know about the current
     //            state of the application (eg. Do we have a selection, Is the viewer busy, what is the current base layer, etc, etc)
     //            is in this state
-    // viewer   - The viewer API. Use this to perform map-related actions. However if a redux action exists as well, it is preferable
-    //            to use that instead as connected components will be able to auto-update in response.
+    // viewer   - The viewer API. Use this to perform map-related actions. However if an equivalent redux action exists as well, 
+    //            it is preferable to use that instead as connected components will be able to auto-update in response.
     // parameters - Any additional parameters. If you have loaded an Application Definition, this is generally the widget's
     //              parsed extension properties
     invoke: (dispatch, getState, viewer, parameters) => {
@@ -98,6 +109,9 @@ initDefaultCommands();
 
 // Register the default set of components
 registerDefaultComponents();
+
+// The following statements below are required if you wish to provide the same browser globals API 
+// that the default viewer bundle provides. 
 
 // Export external libraies under the MapGuide.Externals namespace
 export const Externals = {
