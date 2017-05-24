@@ -113,7 +113,7 @@ class SampleLayoutTemplate extends React.Component<SampleLayoutTemplateProps, an
                 </div>
             </div>
             {/* This is the primary toolbar */}
-            <ToolbarContainer id={Constants.WEBLAYOUT_TOOLBAR} containerStyle={{ position: "absolute", left: SIDEBAR_WIDTH, top: 0, zIndex: 100, backgroundColor: TOOLBAR_BACKGROUND_COLOR }} />
+            <ToolbarContainer id={Constants.WEBLAYOUT_TOOLBAR} containerStyle={{ position: "absolute", left: SIDEBAR_WIDTH, top: 0, right: 0, zIndex: 100, backgroundColor: TOOLBAR_BACKGROUND_COLOR }} />
             <div style={{ position: "absolute", left: SIDEBAR_WIDTH, top: DEFAULT_TOOLBAR_SIZE, bottom: 0, right: 0 }}>
                 {/* The map component */}
                 <PlaceholderComponent id={DefaultComponentNames.Map} locale={locale} />

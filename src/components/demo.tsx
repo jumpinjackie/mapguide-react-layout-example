@@ -33,7 +33,13 @@ export class DemoComponent extends React.Component<DemoComponentProps, object> {
         super(props);
     }
     render(): JSX.Element {
-        return <noscript />;
+        return <div>
+            <div>
+                <p>If you are seeing this message. Congratulations! You have just rendered this component through the use of existing InvokeURL commands</p>
+                <p>This component was rendered with from clicking an InvokeURL command with a URI of <strong>component://DemoComponent</strong></p>
+                <p>This component is connected the redux application state tree. Watch this component automatically update in response to various change in application state</p>
+            </div>
+        </div>;
     }
 }
 
