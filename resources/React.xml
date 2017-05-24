@@ -30,6 +30,10 @@
       </Item>
       <Item xsi:type="WidgetItemType">
         <Function>Widget</Function>
+        <Widget>ViewAsKml</Widget>
+      </Item>
+      <Item xsi:type="WidgetItemType">
+        <Function>Widget</Function>
         <Widget>QuickPlot</Widget>
       </Item>
       <Item xsi:type="SeparatorItemType">
@@ -1306,6 +1310,20 @@
       <ImageUrl />
       <ImageClass />
       <Label>Demo Component</Label>
+      <Tooltip />
+      <StatusText />
+      <Disabled>false</Disabled>
+    </Widget>
+    <Widget xsi:type="UiWidgetType">
+      <Name>ViewAsKml</Name>
+      <Type>InvokeScript</Type>
+      <Location />
+      <Extension>
+        <Script />
+      </Extension>
+      <ImageUrl />
+      <ImageClass />
+      <Label>View as KML</Label>
       <Tooltip />
       <StatusText />
       <Disabled>false</Disabled>
