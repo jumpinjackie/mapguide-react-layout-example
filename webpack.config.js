@@ -82,11 +82,28 @@ module.exports = {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
             },
+            //These loader configurations are required to ensure bundled content assets from the node module are copied to the expected path
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: "file-loader",
+                options: {
+                    name: "stdassets/images/icons/[name].[ext]",
+                    publicPath: "./dist/"
+                }
+            },
+            {
+                test: /\.cur$/,
+                loader: "file-loader",
+                options: {
+                    name: "stdassets/cursors/[name].[ext]",
+                    publicPath: "./dist/"
+                }
+            },
             {
                 test: /\.(woff|woff2|ttf|eot|svg)$/,
                 loader: "file-loader",
                 options: {
-                    name: "fonts/[name].[ext]",
+                    name: "stdassets/fonts/[name].[ext]",
                     publicPath: "./dist/"
                 }
             }

@@ -33,6 +33,10 @@ import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
 import { registerComponentFactory } from "mapguide-react-layout/lib/api/registry/component";
 import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
+import {
+    getRelativeIconPath,
+    SPRITE_INVOKE_SCRIPT
+} from "mapguide-react-layout/lib/utils/asset";
 
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
@@ -67,8 +71,11 @@ registerComponentFactory("DemoComponent", () => <DemoComponent />);
 // Application Definition will invoke this command if it has the same name. This viewer ignores any script content defined
 // in the origial command definition
 registerCommand("ViewAsKml", {
-    //It will look for this icon under stdicons
-    icon: "invoke-script.png",
+    //It will look for this icon under the standard asset path
+    icon: getRelativeIconPath(SPRITE_INVOKE_SCRIPT),
+    //Or you can comment the line above and uncomment the line below to reference the sprite directly
+    //iconClass: SPRITE_INVOKE_SCRIPT,
+
     //This function controls whether the command is in a "selected" state, since this command
     //has no such notion, it always returns false
     selected: () => false,
@@ -122,3 +129,5 @@ export const Externals = {
 
 // Export the MapGuide.Application entry point class
 export { ApplicationViewModel as Application };
+
+export { setAssetRoot } from "mapguide-react-layout/lib/utils/asset";
