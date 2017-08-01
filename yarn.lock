@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@blueprintjs/core@1.23.1":
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.23.1.tgz#0b2880ad142549f07e0fd3d626bbd9b51ed32419"
+"@blueprintjs/core@1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.24.0.tgz#879cf0b17d93c871c223ed478343cdda1abe45d2"
   dependencies:
     "@types/dom4" "^1.5.20"
     "@types/tether" "^1.1.27"
@@ -63,9 +63,9 @@
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.1.tgz#1ecf52621299e65b855374337fb11fd2d1066fc1"
 
-"@types/query-string@4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-4.3.1.tgz#59ea5c75d425817370158789aa4f6197e5abd987"
+"@types/query-string@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-5.0.0.tgz#5dbebd24d0abeb555d0dd9704c33462d84a45e69"
 
 "@types/react-addons-css-transition-group@15.0.3":
   version "15.0.3"
@@ -105,9 +105,9 @@
     "@types/react" "*"
     redux "^3.6.0"
 
-"@types/react@*", "@types/react@15.0.39":
-  version "15.0.39"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.39.tgz#5a820c75cabf4cbfa177a3ab5a9a0634c46b14d1"
+"@types/react@*", "@types/react@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.6.0.tgz#3b3e92a60b65045e4df48fda324de84d83addbc4"
 
 "@types/shortid@0.0.29":
   version "0.0.29"
@@ -1729,19 +1729,19 @@ macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
 
-mapguide-react-layout@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.9.5.tgz#a48ad86e69518897e6da9a014f685dee753b7ec3"
+mapguide-react-layout@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.9.6.tgz#a933a78a8043c58d2a0721e00cb4bd2c52f4b7f3"
   dependencies:
-    "@blueprintjs/core" "1.23.1"
+    "@blueprintjs/core" "1.24.0"
     "@types/es6-promise" "0.0.32"
     "@types/lodash.debounce" "4.0.2"
     "@types/lodash.uniq" "4.5.2"
     "@types/lodash.xor" "^4.5.2"
     "@types/node" "^8.0.17"
     "@types/prop-types" "15.5.1"
-    "@types/query-string" "4.3.1"
-    "@types/react" "15.0.39"
+    "@types/query-string" "5.0.0"
+    "@types/react" "15.6.0"
     "@types/react-addons-css-transition-group" "15.0.3"
     "@types/react-addons-update" "0.14.18"
     "@types/react-dom" "15.5.1"
@@ -3059,9 +3059,9 @@ tough-cookie@~2.3.0:
   dependencies:
     punycode "^1.4.1"
 
-ts-loader@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-2.3.1.tgz#6edc603393c2775c40ad84e3420007f1c097eab0"
+ts-loader@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-2.3.2.tgz#b71b9f0d0062c791a654d462140718f9f7817665"
   dependencies:
     chalk "^2.0.1"
     enhanced-resolve "^3.0.0"

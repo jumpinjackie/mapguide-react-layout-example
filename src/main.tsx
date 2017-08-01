@@ -33,10 +33,8 @@ import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
 import { registerComponentFactory } from "mapguide-react-layout/lib/api/registry/component";
 import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
-import {
-    getRelativeIconPath,
-    SPRITE_INVOKE_SCRIPT
-} from "mapguide-react-layout/lib/utils/asset";
+import { getRelativeIconPath } from "mapguide-react-layout/lib/utils/asset";
+import { SPRITE_INVOKE_SCRIPT } from "mapguide-react-layout/lib/constants/assets";
 
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
