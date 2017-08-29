@@ -23,11 +23,12 @@ import MaroonTemplateLayout from "mapguide-react-layout/lib/layouts/maroon";
 // This is our custom viewer template
 import SampleLayoutTemplate from "./templates/SampleTemplate";
 
-// This is our custom component
+// These are our custom components
 import DemoComponent from "./components/Demo";
+import MessagesComponent from "./components/messages";
 
 import { initDefaultCommands } from "mapguide-react-layout/lib/api/default-commands";
-import { ApplicationViewModel } from "mapguide-react-layout/lib/entries/application";
+import { CustomApplicationViewModel } from "./app";
 import { CommandConditions, registerCommand } from "mapguide-react-layout/lib/api/registry/command";
 import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
@@ -64,6 +65,7 @@ registerLayout("sample-template", () => <SampleLayoutTemplate />);
 //  2. An eligible candidate component when using component:// pseudo-URIs. You can create an InvokeURL commmand with 
 //     the URL of component://DemoComponent and running the command will render the DemoComponent into the TaskPane or new window
 registerComponentFactory("DemoComponent", () => <DemoComponent />);
+registerComponentFactory("MessagesComponent", () => <MessagesComponent />);
 
 // Registers a custom script command. This is the InvokeScript replacement. An InvokeScript command of a Web Layout or
 // Application Definition will invoke this command if it has the same name. This viewer ignores any script content defined
@@ -125,7 +127,9 @@ export const Externals = {
     ReactDOM: ReactDOM
 };
 
-// Export the MapGuide.Application entry point class
-export { ApplicationViewModel as Application };
+// Export the MapGuide.Application entry point class. Note that we're exporting our custom application model
+// instead of the standard ApplicationViewModel as CustomApplicationViewModel introduces custom application
+// state reducers that are demonstrated by the sample application using this bundle
+export { CustomApplicationViewModel as Application };
 
 export { setAssetRoot } from "mapguide-react-layout/lib/utils/asset";

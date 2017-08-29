@@ -30,6 +30,10 @@
       </Item>
       <Item xsi:type="WidgetItemType">
         <Function>Widget</Function>
+        <Widget>messageComponent</Widget>
+      </Item>
+      <Item xsi:type="WidgetItemType">
+        <Function>Widget</Function>
         <Widget>ViewAsKml</Widget>
       </Item>
       <Item xsi:type="WidgetItemType">
@@ -1310,6 +1314,23 @@
       <ImageUrl />
       <ImageClass />
       <Label>Demo Component</Label>
+      <Tooltip />
+      <StatusText />
+      <Disabled>false</Disabled>
+    </Widget>
+    <Widget xsi:type="UiWidgetType">
+      <Name>messageComponent</Name>
+      <Type>InvokeURL</Type>
+      <Location />
+      <Extension>
+        <Target>InvokeUrlWindow</Target>
+        <Url>component://MessagesComponent</Url>
+        <DisableIfSelectionEmpty>false</DisableIfSelectionEmpty>
+        <AdditionalParameter />
+      </Extension>
+      <ImageUrl />
+      <ImageClass />
+      <Label>Messages Component</Label>
       <Tooltip />
       <StatusText />
       <Disabled>false</Disabled>

@@ -7,6 +7,10 @@ This custom viewer bundle uses the [mapguide-react-layout npm module](https://ww
  * Custom script commands
  * Custom viewer templates
  * Custom components
+ * Custom application state
+   * Custom state branch
+   * Custom state reducer function (and registration)
+   * UI that subscribes and manipulates this custom application state through standard redux APIs
 
 ## Requirements
 
@@ -43,4 +47,7 @@ This custom viewer bundle uses the [mapguide-react-layout npm module](https://ww
    * Webpack
  * Loading the viewer in a custom viewer template `sample_template.html`
  * The `View as KML` custom script command
+ * Sub-classing `ApplicationViewModel` to register custom redux reducer functions for custom redux application state (messages)
  * The `Demo Component` InvokeURL using the `component://` pseudo-URI scheme to load the custom demo component into the Task Pane
+    * Use of custom redux actions to push messages to a custom application state branch
+ * The `Message Component` which displays messages from the custom application state branch
