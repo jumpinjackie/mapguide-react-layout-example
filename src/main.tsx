@@ -7,6 +7,41 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import proj4 from "proj4";
 
+// This is our custom application model that allows for custom reducers to be registered
+import { CustomApplicationViewModel } from "./app";
+
+// This is our custom viewer template
+import SampleLayoutTemplate from "./templates/SampleTemplate";
+
+// These are our custom components
+import DemoComponent from "./components/Demo";
+import MessagesComponent from "./components/messages";
+
+// This is the "kitchen sink" import, whether you are importing everything or only a handful
+// of types, in the eyes of webpack you will be bringing in the whole mapguide-react-layout
+// module
+/*
+import {
+    bootstrap,
+    registerLayout,
+    AjaxViewerLayout,
+    SidebarLayout,
+    AquaTemplateLayout,
+    TurquoiseYellowTemplateLayout,
+    LimeGoldTemplateLayout,
+    SlateTemplateLayout,
+    MaroonTemplateLayout,
+    registerComponentFactory,
+    registerCommand,
+    SPRITE_INVOKE_SCRIPT,
+    CommandConditions,
+    initDefaultCommands,
+    registerDefaultComponents,
+    getRelativeIconPath
+} from "mapguide-react-layout";
+*/
+// This is the alternate way to import the same types from mapguide-react-layout
+
 // Import the standard templates for registration
 //
 // If you don't intend to use certain templates, you can remove the import
@@ -20,15 +55,7 @@ import LimeGoldTemplateLayout from "mapguide-react-layout/lib/layouts/limegold";
 import SlateTemplateLayout from "mapguide-react-layout/lib/layouts/slate";
 import MaroonTemplateLayout from "mapguide-react-layout/lib/layouts/maroon";
 
-// This is our custom viewer template
-import SampleLayoutTemplate from "./templates/SampleTemplate";
-
-// These are our custom components
-import DemoComponent from "./components/Demo";
-import MessagesComponent from "./components/messages";
-
 import { initDefaultCommands } from "mapguide-react-layout/lib/api/default-commands";
-import { CustomApplicationViewModel } from "./app";
 import { CommandConditions, registerCommand } from "mapguide-react-layout/lib/api/registry/command";
 import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
 import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
