@@ -6,3 +6,5 @@
  */
 
 declare module "proj4";
+
+declare var require: any;
