@@ -53,7 +53,11 @@ function mapStateToProps(state: Readonly<IApplicationState>, ownProps: Readonly<
     };
 }
 
-function mapDispatchToProps(dispatch: ReduxDispatch): Partial<IDemoComponentDispatch> {
+// Have to type our own dispatcher here as the default dispatcher is strongly-typed against a fixed set of
+// viewer built-in actions
+type OurReduxDispatch = (action: { type: string, payload?: any }) => void;
+
+function mapDispatchToProps(dispatch: OurReduxDispatch): Partial<IDemoComponentDispatch> {
     return {
         setActiveTool: (tool) => dispatch(MapActions.setActiveTool(tool)),
         setTooltipsEnabled: (enabled) => dispatch(MapActions.setFeatureTooltipsEnabled(enabled)),

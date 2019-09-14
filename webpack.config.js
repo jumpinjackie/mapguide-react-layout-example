@@ -24,24 +24,31 @@ const prodPlugins = [
         options: {
             context: __dirname
         }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-            warnings: false,
-            screw_ie8: true
-        },
-        comments: false
     })
 ];
 const plugins = basePlugins
     .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
     .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
 
+const optimizeOpts = (process.env.BUILD_MODE === 'production')
+    ? {
+        minimizer: [
+            new TerserPlugin({
+                extractComments: true,
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
+            new OptimizeCSSAssetsPlugin({})
+        ]
+    }
+    : { minimize: false }
+
 module.exports = {
     entry: {
         viewer: './src/main.tsx'
     },
+    optimization: optimizeOpts,
     output: {
         libraryTarget: "var",
         library: "MapGuide",
