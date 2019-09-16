@@ -1,5 +1,7 @@
 # mapguide-react-layout-example
 
+[![Build Status](https://travis-ci.org/jumpinjackie/mapguide-react-layout-example.svg?branch=master)](https://travis-ci.org/jumpinjackie/mapguide-react-layout-example)
+
 This repo contains an example of a customized [mapguide-react-layout](https://github.com/jumpinjackie/mapguide-react-layout) viewer bundle.
 
 This custom viewer bundle uses the [mapguide-react-layout npm module](https://www.npmjs.com/package/mapguide-react-layout) and demonstrates:
