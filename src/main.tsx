@@ -11,10 +11,10 @@ import proj4 from "proj4";
 import { CustomApplicationViewModel } from "./app";
 
 // This is our custom viewer template
-import SampleLayoutTemplate from "./templates/SampleTemplate";
+import SampleLayoutTemplate from "./templates/sample-template";
 
 // These are our custom components
-import DemoComponent from "./components/Demo";
+import DemoComponent from "./components/demo";
 import MessagesComponent from "./components/messages";
 
 // This is the "kitchen sink" import, whether you are importing everything or only a handful
