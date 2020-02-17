@@ -63,12 +63,33 @@ import { registerComponentFactory } from "mapguide-react-layout/lib/api/registry
 import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
 import { getRelativeIconPath } from "mapguide-react-layout/lib/utils/asset";
 import { SPRITE_INVOKE_SCRIPT } from "mapguide-react-layout/lib/constants/assets";
+import { MapAgentRequestBuilder } from 'mapguide-react-layout/lib/api/builders/mapagent';
+import { addFormatDriver } from "mapguide-react-layout/lib/api/layer-manager/driver-registry";
+import { FormatDriver } from "mapguide-react-layout/lib/api/layer-manager/format-driver";
+import { CsvFormatDriver, CSV_COLUMN_ALIASES } from "mapguide-react-layout/lib/api/layer-manager/csv-driver";
+import { registerRequestBuilder } from "mapguide-react-layout/lib/api/builders/factory";
+
+import GeoJSON from 'ol/format/GeoJSON';
+import TopoJSON from 'ol/format/TopoJSON';
+import KML from 'ol/format/KML';
+import GPX from 'ol/format/GPX';
+import IGC from 'ol/format/IGC';
 
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
 
 // Sets up the required core libraries
 bootstrap();
+
+// Register default format drivers to use for the External Layer Manager tool
+// If you have no intention of using this tool or using the Layer Manager APIs
+// you can comment these lines out
+addFormatDriver(new CsvFormatDriver(CSV_COLUMN_ALIASES));
+addFormatDriver(new FormatDriver("GeoJSON", new GeoJSON()));
+addFormatDriver(new FormatDriver("TopoJSON", new TopoJSON()));
+addFormatDriver(new FormatDriver("KML", new KML(), "EPSG:4326"));
+addFormatDriver(new FormatDriver("GPX", new GPX(), "EPSG:4326"));
+addFormatDriver(new FormatDriver("IGC", new IGC()));
 
 // Register the templates we intend to provide in this viewer. Below is the standard set
 //
@@ -143,6 +164,9 @@ initDefaultCommands();
 
 // Register the default set of components
 registerDefaultComponents();
+
+//Register the default mapagent request builder (that can be replaced later on if desired)
+registerRequestBuilder("mapagent", (agentUri, locale) => new MapAgentRequestBuilder(agentUri, locale));
 
 // The following statements below are required if you wish to provide the same browser globals API 
 // that the default viewer bundle provides. 
