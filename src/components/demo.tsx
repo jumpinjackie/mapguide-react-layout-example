@@ -38,9 +38,9 @@ function mapStateToProps(state: Readonly<IApplicationState>, ownProps: Readonly<
         if (mapState.currentView) {
             scale = mapState.currentView.scale;
         }
-        if (mapState.selectionSet && mapState.selectionSet.FeatureSet) {
-            selectedFeatureCount = mapState.selectionSet.FeatureSet.Layer.map(layer => layer.Class.ID.length).reduce((a, b) => a + b, 0);
-            selectedLayerCount = mapState.selectionSet.FeatureSet.Layer.length;
+        if (mapState.mapguide?.selectionSet && mapState.mapguide.selectionSet.FeatureSet) {
+            selectedFeatureCount = mapState.mapguide.selectionSet.FeatureSet.Layer.map(layer => layer.Class.ID.length).reduce((a, b) => a + b, 0);
+            selectedLayerCount = mapState.mapguide.selectionSet.FeatureSet.Layer.length;
         }
     }
     return {

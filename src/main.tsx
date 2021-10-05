@@ -35,7 +35,9 @@ import {
     initDefaultCommands,
     registerDefaultComponents,
     getRelativeIconPath,
-    setAssetRoot
+    setAssetRoot,
+    ExternalLayerFactoryRegistry,
+    LayoutCapabilities
 } from "mapguide-react-layout";
 
 import { MapAgentRequestBuilder } from 'mapguide-react-layout/lib/api/builders/mapagent';
@@ -49,6 +51,9 @@ import TopoJSON from 'ol/format/TopoJSON';
 import KML from 'ol/format/KML';
 import GPX from 'ol/format/GPX';
 import IGC from 'ol/format/IGC';
+
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
 
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
@@ -71,17 +76,22 @@ addFormatDriver(new FormatDriver("IGC", new IGC()));
 // If you don't intend to use certain templates, you can remove the registration call
 // (and their respective import statement above), and the templates will not be included
 // in the viewer bundle (with some size reduction as a result)
-registerLayout("ajax-viewer", () => <AjaxViewerLayout />);
-registerLayout("sidebar", () => <SidebarLayout />);
-registerLayout("aqua", () => <AquaTemplateLayout />);
-registerLayout("turquoise-yellow", () => <TurquoiseYellowTemplateLayout />);
-registerLayout("limegold", () => <LimeGoldTemplateLayout />);
-registerLayout("slate", () => <SlateTemplateLayout />);
-registerLayout("maroon", () => <MaroonTemplateLayout />);
-registerLayout("generic", () => <GenericLayout />);
+const DEFAULT_CAPS: LayoutCapabilities = {
+    hasTaskPane: true
+};
+registerLayout("ajax-viewer", () => <AjaxViewerLayout />, DEFAULT_CAPS);
+registerLayout("sidebar", () => <SidebarLayout />, DEFAULT_CAPS);
+registerLayout("aqua", () => <AquaTemplateLayout />, DEFAULT_CAPS);
+registerLayout("turquoise-yellow", () => <TurquoiseYellowTemplateLayout />, DEFAULT_CAPS);
+registerLayout("limegold", () => <LimeGoldTemplateLayout />, DEFAULT_CAPS);
+registerLayout("slate", () => <SlateTemplateLayout />, DEFAULT_CAPS);
+registerLayout("maroon", () => <MaroonTemplateLayout />, DEFAULT_CAPS);
+registerLayout("generic", () => <GenericLayout />, {
+    hasTaskPane: false
+});
 
 // Register our custom viewer template
-registerLayout("sample-template", () => <SampleLayoutTemplate />);
+registerLayout("sample-template", () => <SampleLayoutTemplate />, DEFAULT_CAPS);
 
 // Register our custom component. Registering a custom component allows the component to be:
 //
@@ -133,6 +143,23 @@ registerCommand("ViewAsKml", {
             }
         }
     }
+});
+
+// Register a RemoteCSV custom external vector layer driver.
+//
+// Custom external vector layer drivers solve the problem where we want to create a vector layer, against a source that reads vector data in a manner that 
+// is not supported by OpenLayers out of the box. Examples where a custom external vector layer driver would be used include:
+//
+//  a) Hitting an endpoint that returns data in a format not supported out-of-the-box by OpenLayers, but can be converted to one (eg. CSV data or a GraphQL response)
+//  b) Hitting an endpoint that returns data in a format supported OOTB by OpenLayers, but requires passing additiona data/parameters to the endpoint at runtime (eg. API keys or auth tokens)
+//  c) A combination of the above
+const extLayerReg = ExternalLayerFactoryRegistry.getInstance();
+extLayerReg.registerExternalVectorLayerCreator("RemoteCSV", (data, meta, layerOptions, appSettings) => {
+    const source = new VectorSource();
+    const layer = new VectorLayer({
+        source: source
+    });
+    return layer;
 });
 
 // Register the default set of commands (zoom/pan/etc/etc) to the command registry

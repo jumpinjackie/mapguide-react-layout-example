@@ -4,11 +4,13 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const basePlugins = [
     // This will copy required mapguide-react-layout assets to the right location (relative to the location of viewer.js bundle)
-    new CopyWebpackPlugin([
-        { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/strings/**/*'), to: path.join(__dirname, 'strings'), flatten: true },
-        { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/server/TaskPane.html'), to: path.join(__dirname, 'server/TaskPane.html') },
-        { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/stdicons/**/*'), to: path.join(__dirname, 'stdicons'), flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+        patterns: [
+            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/strings/**/*'), to: path.join(__dirname, 'strings/[name][ext]') },
+            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/server/TaskPane.html'), to: path.join(__dirname, 'server/TaskPane.html') },
+            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/stdicons/**/*'), to: path.join(__dirname, 'stdicons/[name][ext]') }
+        ]
+    }),
     new webpack.DefinePlugin({
         __DEV__: process.env.NODE_ENV !== 'production',
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -87,7 +89,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader'
+                use: ['style-loader', 'css-loader']
             },
             //These loader configurations are required to ensure bundled content assets from the node module are copied to the expected path
             {

@@ -1,13 +1,6 @@
+import { IApplicationState, ReduxDispatch, PlaceholderComponent, DefaultComponentNames, ToolbarContainer, TOOLBAR_BACKGROUND_COLOR, DEFAULT_TOOLBAR_SIZE, ViewerApiShim, ModalLauncher, FlyoutRegionContainer, WEBLAYOUT_TOOLBAR } from "mapguide-react-layout";
 import * as React from "react";
 import { connect } from "react-redux";
-import * as Constants from "mapguide-react-layout/lib/constants";
-import { DEFAULT_TOOLBAR_SIZE, TOOLBAR_BACKGROUND_COLOR } from "mapguide-react-layout/lib/components/toolbar";
-import ToolbarContainer from "mapguide-react-layout/lib/containers/toolbar";
-import { PlaceholderComponent, DefaultComponentNames } from "mapguide-react-layout/lib/api/registry/component";
-import { IApplicationState, ReduxDispatch } from "mapguide-react-layout/lib/api/common";
-import FlyoutRegionContainer from "mapguide-react-layout/lib/containers/flyout-region";
-import ViewerApiShim from "mapguide-react-layout/lib/containers/viewer-shim";
-import ModalLauncher from "mapguide-react-layout/lib/containers/modal-launcher";
 
 const SIDEBAR_WIDTH = 250;
 const TASKPANE_HEIGHT = 500;
@@ -113,7 +106,7 @@ class SampleLayoutTemplate extends React.Component<SampleLayoutTemplateProps, an
                 </div>
             </div>
             {/* This is the primary toolbar */}
-            <ToolbarContainer id={Constants.WEBLAYOUT_TOOLBAR} containerStyle={{ position: "absolute", left: SIDEBAR_WIDTH, top: 0, right: 0, zIndex: 100, backgroundColor: TOOLBAR_BACKGROUND_COLOR }} />
+            <ToolbarContainer id={WEBLAYOUT_TOOLBAR} containerStyle={{ position: "absolute", left: SIDEBAR_WIDTH, top: 0, right: 0, zIndex: 100, backgroundColor: TOOLBAR_BACKGROUND_COLOR }} />
             <div style={{ position: "absolute", left: SIDEBAR_WIDTH, top: DEFAULT_TOOLBAR_SIZE, bottom: 0, right: 0 }}>
                 {/* The map component */}
                 <PlaceholderComponent id={DefaultComponentNames.Map} locale={locale} />
