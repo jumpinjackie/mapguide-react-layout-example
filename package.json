@@ -9,7 +9,7 @@
     "watch:dev": "cross-env NODE_ENV=development webpack -w --progress --config webpack.config.js"
   },
   "dependencies": {
-    "mapguide-react-layout": "0.14.0",
+    "mapguide-react-layout": "0.14.1",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
@@ -20,6 +20,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
     "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.3.0",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.0",
     "ts-loader": "^9.2.6",

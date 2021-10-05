@@ -36,8 +36,13 @@ import {
     registerDefaultComponents,
     getRelativeIconPath,
     setAssetRoot,
-    ExternalLayerFactoryRegistry,
-    LayoutCapabilities
+    LayoutCapabilities,
+    registerMapGuideComponents,
+    initMapGuideCommands,
+    DefaultComponentNames,
+    MapGuideMapProviderContext,
+    MapProviderContextProvider,
+    MapViewer
 } from "mapguide-react-layout";
 
 import { MapAgentRequestBuilder } from 'mapguide-react-layout/lib/api/builders/mapagent';
@@ -52,11 +57,13 @@ import KML from 'ol/format/KML';
 import GPX from 'ol/format/GPX';
 import IGC from 'ol/format/IGC';
 
-import VectorSource from "ol/source/Vector";
-import VectorLayer from "ol/layer/Vector";
 
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
+// Pull in required thirdparty css
+import "ol/ol.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "react-splitter-layout/lib/index.css";
 
 // Sets up the required core libraries
 bootstrap();
@@ -92,6 +99,20 @@ registerLayout("generic", () => <GenericLayout />, {
 
 // Register our custom viewer template
 registerLayout("sample-template", () => <SampleLayoutTemplate />, DEFAULT_CAPS);
+
+// Register the default set of commands (zoom/pan/etc/etc) to the command registry
+initDefaultCommands();
+initMapGuideCommands();
+
+// Register the default set of components
+registerDefaultComponents();
+registerMapGuideComponents();
+
+// Register our MapGuide-specific viewer implementation
+const PROVIDER_IMPL = new MapGuideMapProviderContext();
+registerComponentFactory(DefaultComponentNames.Map, (props) => <MapProviderContextProvider value={PROVIDER_IMPL}>
+    <MapViewer {...props} />
+</MapProviderContextProvider>);
 
 // Register our custom component. Registering a custom component allows the component to be:
 //
@@ -144,29 +165,6 @@ registerCommand("ViewAsKml", {
         }
     }
 });
-
-// Register a RemoteCSV custom external vector layer driver.
-//
-// Custom external vector layer drivers solve the problem where we want to create a vector layer, against a source that reads vector data in a manner that 
-// is not supported by OpenLayers out of the box. Examples where a custom external vector layer driver would be used include:
-//
-//  a) Hitting an endpoint that returns data in a format not supported out-of-the-box by OpenLayers, but can be converted to one (eg. CSV data or a GraphQL response)
-//  b) Hitting an endpoint that returns data in a format supported OOTB by OpenLayers, but requires passing additiona data/parameters to the endpoint at runtime (eg. API keys or auth tokens)
-//  c) A combination of the above
-const extLayerReg = ExternalLayerFactoryRegistry.getInstance();
-extLayerReg.registerExternalVectorLayerCreator("RemoteCSV", (data, meta, layerOptions, appSettings) => {
-    const source = new VectorSource();
-    const layer = new VectorLayer({
-        source: source
-    });
-    return layer;
-});
-
-// Register the default set of commands (zoom/pan/etc/etc) to the command registry
-initDefaultCommands();
-
-// Register the default set of components
-registerDefaultComponents();
 
 //Register the default mapagent request builder (that can be replaced later on if desired)
 registerRequestBuilder("mapagent", (agentUri, locale) => new MapAgentRequestBuilder(agentUri, locale));

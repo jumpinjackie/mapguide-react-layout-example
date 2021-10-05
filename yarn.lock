@@ -21,7 +21,7 @@
   resolved "https://registry.yarnpkg.com/@blueprintjs/colors/-/colors-4.0.0-alpha.1.tgz#370684b404e5400494169c54cc3a31385fc6db6a"
   integrity sha512-i95xW/cAIijJAMIBDrXw1WLbGVXVaRDRG1Ga0CxOtMVwL20zvdXlQj7EMqhkgVEJo9LaKNIDliPI+jsh7h5Lag==
 
-"@blueprintjs/core@^3.50.3":
+"@blueprintjs/core@^3.50.4":
   version "3.50.4"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.50.4.tgz#18868d6d9930d513b25d30bfc3b30b3d68adf72a"
   integrity sha512-FYGr1ZMH1si2acdZaTI4gqhvwgb0yOWcv7otYdi/tvC4ReId2gsm2i+bDw/eBMYsH+OSFYZT0C6hFvHV3HrkPA==
@@ -1164,12 +1164,12 @@ mapbox-to-css-font@^2.4.0:
   resolved "https://registry.yarnpkg.com/mapbox-to-css-font/-/mapbox-to-css-font-2.4.0.tgz#a23b51664a1ee839beaefade013f2655bee9a390"
   integrity sha512-v674D0WtpxCXlA6E+sBlG1QJWdUkz/s9qAD91bJSXBGuBL5lL4tJXpoJEftecphCh2SVQCjWMS2vhylc3AIQTg==
 
-mapguide-react-layout@0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.14.0.tgz#aafbe79053b04c453b0cbd559c29146691d18c03"
-  integrity sha512-2EwDsUvMGcUmdWwH4NAVVNRxAfAHcvzw+NgX0mVU22CyNsLTK9Hl+NbZkKcZh82ek2DWoy+oowZrJTZVfchbHQ==
+mapguide-react-layout@0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.14.1.tgz#12ca4489de4e030cb24d425a4a21a53a025c79dc"
+  integrity sha512-z8JkWT9OHe3yBX3XFwGtqZl7PUVRVxV4d9BXRXJbrwYhrtq8YRMsDfHRgDCgCLkF16VkYyj2ALqLGH6n2VwOqQ==
   dependencies:
-    "@blueprintjs/core" "^3.50.3"
+    "@blueprintjs/core" "^3.50.4"
     colorbrewer "^1.5.1"
     expr-eval "2.0.2"
     geojson-vt "^3.2.1"
@@ -1242,6 +1242,13 @@ mimic-fn@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
+
+mini-css-extract-plugin@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-2.3.0.tgz#87515f185533752944d753ac7216fc876779dafe"
+  integrity sha512-uzWaOwC+gJrnKbr23J1ZRWx/Wd9W9Ce1mKPlsBGBV/r8zG7/G7oKMxGmxbI65pVGbae2cR7CUx9Ulk0HQt8BfQ==
+  dependencies:
+    schema-utils "^3.1.0"
 
 minimist@^1.2.5:
   version "1.2.5"
