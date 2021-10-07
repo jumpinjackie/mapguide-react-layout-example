@@ -17,16 +17,13 @@ import SampleLayoutTemplate from "./templates/sample-template";
 import DemoComponent from "./components/demo";
 import MessagesComponent from "./components/messages";
 
-// This is the "kitchen sink" import, whether you are importing everything or only a handful
-// of types, in the eyes of webpack you will be bringing in the whole mapguide-react-layout
-// module
-/*
 import {
     bootstrap,
     registerLayout,
     AjaxViewerLayout,
     SidebarLayout,
     AquaTemplateLayout,
+    GenericLayout,
     TurquoiseYellowTemplateLayout,
     LimeGoldTemplateLayout,
     SlateTemplateLayout,
@@ -37,32 +34,17 @@ import {
     CommandConditions,
     initDefaultCommands,
     registerDefaultComponents,
-    getRelativeIconPath
+    getRelativeIconPath,
+    setAssetRoot,
+    LayoutCapabilities,
+    registerMapGuideComponents,
+    initMapGuideCommands,
+    DefaultComponentNames,
+    MapGuideMapProviderContext,
+    MapProviderContextProvider,
+    MapViewer
 } from "mapguide-react-layout";
-*/
-// This is the alternate way to import the same types from mapguide-react-layout
 
-// Import the standard templates for registration
-//
-// If you don't intend to use certain templates, you can remove the import
-// statements and their template registrations, and the templates will not
-// be included in the viewer bundle (with some size reduction as a result)
-import AjaxViewerLayout from "mapguide-react-layout/lib/layouts/ajax-viewer";
-import SidebarLayout from "mapguide-react-layout/lib/layouts/sidebar";
-import AquaTemplateLayout from "mapguide-react-layout/lib/layouts/aqua";
-import TurquoiseYellowTemplateLayout from "mapguide-react-layout/lib/layouts/turquoise-yellow";
-import LimeGoldTemplateLayout from "mapguide-react-layout/lib/layouts/limegold";
-import SlateTemplateLayout from "mapguide-react-layout/lib/layouts/slate";
-import MaroonTemplateLayout from "mapguide-react-layout/lib/layouts/maroon";
-
-import { initDefaultCommands } from "mapguide-react-layout/lib/api/default-commands";
-import { CommandConditions, registerCommand } from "mapguide-react-layout/lib/api/registry/command";
-import { registerLayout } from "mapguide-react-layout/lib/api/registry/layout";
-import { registerDefaultComponents } from "mapguide-react-layout/lib/api/default-components";
-import { registerComponentFactory } from "mapguide-react-layout/lib/api/registry/component";
-import { bootstrap } from "mapguide-react-layout/lib/api/bootstrap";
-import { getRelativeIconPath } from "mapguide-react-layout/lib/utils/asset";
-import { SPRITE_INVOKE_SCRIPT } from "mapguide-react-layout/lib/constants/assets";
 import { MapAgentRequestBuilder } from 'mapguide-react-layout/lib/api/builders/mapagent';
 import { addFormatDriver } from "mapguide-react-layout/lib/api/layer-manager/driver-registry";
 import { FormatDriver } from "mapguide-react-layout/lib/api/layer-manager/format-driver";
@@ -75,8 +57,13 @@ import KML from 'ol/format/KML';
 import GPX from 'ol/format/GPX';
 import IGC from 'ol/format/IGC';
 
+
 // This will pull in and embed the core stylesheet into the viewer bundle
 require("mapguide-react-layout/src/styles/index.css");
+// Pull in required thirdparty css
+import "ol/ol.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "react-splitter-layout/lib/index.css";
 
 // Sets up the required core libraries
 bootstrap();
@@ -96,16 +83,36 @@ addFormatDriver(new FormatDriver("IGC", new IGC()));
 // If you don't intend to use certain templates, you can remove the registration call
 // (and their respective import statement above), and the templates will not be included
 // in the viewer bundle (with some size reduction as a result)
-registerLayout("ajax-viewer", () => <AjaxViewerLayout />);
-registerLayout("sidebar", () => <SidebarLayout />);
-registerLayout("aqua", () => <AquaTemplateLayout />);
-registerLayout("turquoise-yellow", () => <TurquoiseYellowTemplateLayout />);
-registerLayout("limegold", () => <LimeGoldTemplateLayout />);
-registerLayout("slate", () => <SlateTemplateLayout />);
-registerLayout("maroon", () => <MaroonTemplateLayout />);
+const DEFAULT_CAPS: LayoutCapabilities = {
+    hasTaskPane: true
+};
+registerLayout("ajax-viewer", () => <AjaxViewerLayout />, DEFAULT_CAPS);
+registerLayout("sidebar", () => <SidebarLayout />, DEFAULT_CAPS);
+registerLayout("aqua", () => <AquaTemplateLayout />, DEFAULT_CAPS);
+registerLayout("turquoise-yellow", () => <TurquoiseYellowTemplateLayout />, DEFAULT_CAPS);
+registerLayout("limegold", () => <LimeGoldTemplateLayout />, DEFAULT_CAPS);
+registerLayout("slate", () => <SlateTemplateLayout />, DEFAULT_CAPS);
+registerLayout("maroon", () => <MaroonTemplateLayout />, DEFAULT_CAPS);
+registerLayout("generic", () => <GenericLayout />, {
+    hasTaskPane: false
+});
 
 // Register our custom viewer template
-registerLayout("sample-template", () => <SampleLayoutTemplate />);
+registerLayout("sample-template", () => <SampleLayoutTemplate />, DEFAULT_CAPS);
+
+// Register the default set of commands (zoom/pan/etc/etc) to the command registry
+initDefaultCommands();
+initMapGuideCommands();
+
+// Register the default set of components
+registerDefaultComponents();
+registerMapGuideComponents();
+
+// Register our MapGuide-specific viewer implementation
+const PROVIDER_IMPL = new MapGuideMapProviderContext();
+registerComponentFactory(DefaultComponentNames.Map, (props) => <MapProviderContextProvider value={PROVIDER_IMPL}>
+    <MapViewer {...props} />
+</MapProviderContextProvider>);
 
 // Register our custom component. Registering a custom component allows the component to be:
 //
@@ -149,7 +156,7 @@ registerCommand("ViewAsKml", {
         const mapState = state.mapState;
         const activeMapName = state.config.activeMapName;
         if (activeMapName) {
-            const map = mapState[activeMapName].runtimeMap;
+            const map = mapState[activeMapName].mapguide?.runtimeMap;
             if (map) {
                 const mapDefId = map.MapDefinition;
                 const url = `../mapagent/mapagent.fcgi?USERNAME=Anonymous&OPERATION=GetMapKml&VERSION=1.0.0&MAPDEFINITION=${mapDefId}`;
@@ -158,12 +165,6 @@ registerCommand("ViewAsKml", {
         }
     }
 });
-
-// Register the default set of commands (zoom/pan/etc/etc) to the command registry
-initDefaultCommands();
-
-// Register the default set of components
-registerDefaultComponents();
 
 //Register the default mapagent request builder (that can be replaced later on if desired)
 registerRequestBuilder("mapagent", (agentUri, locale) => new MapAgentRequestBuilder(agentUri, locale));
@@ -183,4 +184,4 @@ export const Externals = {
 // state reducers that are demonstrated by the sample application using this bundle
 export { CustomApplicationViewModel as Application };
 
-export { setAssetRoot } from "mapguide-react-layout/lib/utils/asset";
+export { setAssetRoot };
