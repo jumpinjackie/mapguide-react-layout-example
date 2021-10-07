@@ -1,24 +1,45 @@
 'use strict';
+
 const path = require('path');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const basePlugins = [
-    // This will copy required mapguide-react-layout assets to the right location (relative to the location of viewer.js bundle)
-    new CopyWebpackPlugin({
-        patterns: [
-            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/strings'), to: path.join(__dirname, 'strings/[name][ext]') },
-            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/server/TaskPane.html'), to: path.join(__dirname, 'server/TaskPane.html') },
-            //{ from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/stdicons/**/*'), to: path.join(__dirname, 'stdicons/[name][ext]') }
-        ]
+    new webpack.ProvidePlugin({
+        "proj4": "proj4"
     }),
     new webpack.DefinePlugin({
-        __DEV__: process.env.NODE_ENV !== 'production',
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+        //Needed for blueprint
+        'process.env.BLUEPRINT_NAMESPACE': JSON.stringify("bp3"),
+        __DEV__: process.env.BUILD_MODE !== 'production',
+        __VERSION__: JSON.stringify(process.env.APPVEYOR_BUILD_VERSION || ""),
+        __COMMITHASH__: JSON.stringify(process.env.APPVEYOR_REPO_COMMIT || ""),
+        __BRANCH__: JSON.stringify(process.env.APPVEYOR_REPO_BRANCH || "master")
+    }),
+    new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: process.env.DEBUG_BUILD === '1' ? '[name]-debug.css' : '[name].css',
+        chunkFilename: "[id].css"
+    }),
+    // Intercept the BP icon import with our own slimmed down version
+    // Ref: https://github.com/palantir/blueprint/issues/2193#issuecomment-453326234
+    new webpack.NormalModuleReplacementPlugin(
+        /.*\/generated\/iconSvgPaths.*/,
+        path.resolve(__dirname, 'node_modules/mapguide-react-layout/stdassets/bp-icons.js'),
+    )
 ];
+
 const devPlugins = [
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.WatchIgnorePlugin({
+        paths: [
+            /\.js$/,
+            /\.d\.ts$/
+        ]
+    })
 ];
+
 const prodPlugins = [
     new webpack.LoaderOptionsPlugin({
         minimize: true,
@@ -28,41 +49,111 @@ const prodPlugins = [
         }
     })
 ];
-const plugins = basePlugins
-    .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
-    .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
 
-const optimizeOpts = (process.env.BUILD_MODE === 'production')
-    ? {
-        minimizer: [
-            new TerserPlugin({
-                extractComments: true,
-                cache: true,
-                parallel: true,
-                sourceMap: true // set to true if you want JS source maps
-            }),
-            new OptimizeCSSAssetsPlugin({})
+const plugins = basePlugins
+    .concat(process.env.BUILD_MODE === 'production' ? prodPlugins : [])
+    .concat(process.env.BUILD_MODE === 'development' ? devPlugins : []);
+
+const rules = [
+    { //sourcemap
+        test: /\.js$/,
+        loader: "source-map-loader",
+        include: [
+            /@blueprintjs/
+        ],
+        enforce: "pre"
+    },
+    { //html
+        test: /\.html$/,
+        loader: 'raw-loader',
+        exclude: /node_modules/
+    },
+    { //css
+        test: /\.css$/,
+        use: [
+            {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    publicPath: './'
+                }
+            },
+            "css-loader"
         ]
+    },
+    { //less
+        test: /\.less$/,
+        use: [
+            'less-loader',
+            'css-loader'
+        ],
+        exclude: /node_modules/
+    },
+    { //fonts
+        test: /\.(woff|woff2|ttf|eot|svg)$/,
+        loader: "file-loader",
+        options: {
+            name: "stdassets/fonts/[name].[ext]"
+        }
+    },
+    { //Non-sprite images
+        test: /\.(png|gif)$/,
+        include: [
+            path.resolve(__dirname, "node_modules/mapguide-react-layout/stdassets")
+        ],
+        loader: "file-loader",
+        options: {
+            name(file) {
+                //console.log(`[file-loader]: Processing: ${file}`);
+                var fidx = file.indexOf("stdassets");
+                var relPath = file.substring(fidx).replace(/\\/g, "/");
+                if (relPath.startsWith("stdassets/images/icons/")) {
+                    return "stdassets/images/icons/[name].[ext]";
+                } else if (relPath.startsWith("stdassets/images/res")) {
+                    return "stdassets/images/res/[name].[ext]";
+                } else {
+                    return "[path][name].[ext]";
+                }
+            },
+            publicPath: "./dist"
+        }
+    },
+    { //Cursors
+        test: /\.cur$/,
+        include: [
+            path.resolve(__dirname, "node_modules/mapguide-react-layout/stdassets")
+        ],
+        loader: "file-loader",
+        options: {
+            name(file) {
+                return "stdassets/cursors/[name].[ext]";
+            },
+            publicPath: "./dist"
+        }
+    },
+    { //TypeScript React
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /(node_modules|test-utils|\.test\.ts$)/
     }
-    : { minimize: false }
+];
 
 module.exports = {
+    mode: (process.env.BUILD_MODE === 'development' ? 'development' : 'production'),
     entry: {
-        viewer: './src/main.tsx'
+        viewer: {
+            import: './src/main.tsx'
+        }
     },
-    optimization: optimizeOpts,
+    devtool: 'source-map',
     output: {
         libraryTarget: "var",
         library: "MapGuide",
-        path: path.join(__dirname, 'dist'),
-        //filename: '[name].[hash].js',
-        filename: '[name].js',
+        path: path.join(__dirname, 'viewer/dist'),
+        filename: process.env.DEBUG_BUILD === '1' ? '[name]-debug.js' : '[name].js',
         publicPath: '/',
-        //sourceMapFilename: '[name].[hash].js.map',
-        sourceMapFilename: '[name].js.map',
+        sourceMapFilename: '[file].map[query]',
         chunkFilename: '[id].chunk.js'
     },
-    devtool: 'source-map',
     resolve: {
         alias: {},
         modules: [
@@ -72,50 +163,19 @@ module.exports = {
     },
     plugins: plugins,
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: "source-map-loader",
-                include: [ //These libraries have source maps, use them
-                    path.resolve(__dirname, "node_modules/@blueprintjs"),
-                    path.resolve(__dirname, "node_modules/mapguide-react-layout")
-                ],
-                enforce: "pre"
-            },
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                exclude: /(node_modules|test-utils|\.test\.ts$)/
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            },
-            //These loader configurations are required to ensure bundled content assets from the node module are copied to the expected path
-            {
-                test: /\.(png|jpg|gif)$/,
-                loader: "file-loader",
-                options: {
-                    name: "stdassets/images/icons/[name].[ext]",
-                    publicPath: "./dist/"
-                }
-            },
-            {
-                test: /\.cur$/,
-                loader: "file-loader",
-                options: {
-                    name: "stdassets/cursors/[name].[ext]",
-                    publicPath: "./dist/"
-                }
-            },
-            {
-                test: /\.(woff|woff2|ttf|eot|svg)$/,
-                loader: "file-loader",
-                options: {
-                    name: "stdassets/fonts/[name].[ext]",
-                    publicPath: "./dist/"
+        rules: rules
+    },
+    optimization: {
+        splitChunks: {
+            name: false,
+            cacheGroups: {
+                default: false,
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendor",
+                    chunks: "all"
                 }
             }
-        ]
+        }
     }
 };
