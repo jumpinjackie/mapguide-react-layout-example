@@ -2,9 +2,17 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const basePlugins = [
+    // This will copy required mapguide-react-layout assets to the right location (relative to the location of viewer.js bundle)
+    new CopyWebpackPlugin({
+        patterns: [
+            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/strings'), to: path.join(__dirname, 'strings') },
+            { from: path.join(__dirname, 'node_modules/mapguide-react-layout/viewer/server/TaskPane.html'), to: path.join(__dirname, 'server/TaskPane.html') }
+        ]
+    }),
     new webpack.ProvidePlugin({
         "proj4": "proj4"
     }),
@@ -97,13 +105,16 @@ const rules = [
     },
     { //Non-sprite images
         test: /\.(png|gif)$/,
+        exclude: [
+            /icons.png$/
+        ],
         include: [
             path.resolve(__dirname, "node_modules/mapguide-react-layout/stdassets")
         ],
         loader: "file-loader",
         options: {
             name(file) {
-                //console.log(`[file-loader]: Processing: ${file}`);
+                console.log(`[file-loader]: Processing: ${file}`);
                 var fidx = file.indexOf("stdassets");
                 var relPath = file.substring(fidx).replace(/\\/g, "/");
                 if (relPath.startsWith("stdassets/images/icons/")) {
@@ -148,7 +159,7 @@ module.exports = {
     output: {
         libraryTarget: "var",
         library: "MapGuide",
-        path: path.join(__dirname, 'viewer/dist'),
+        path: path.join(__dirname, 'dist'),
         filename: process.env.DEBUG_BUILD === '1' ? '[name]-debug.js' : '[name].js',
         publicPath: '/',
         sourceMapFilename: '[file].map[query]',
