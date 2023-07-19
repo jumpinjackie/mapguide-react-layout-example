@@ -688,10 +688,10 @@ dom4@^2.1.5:
   resolved "https://registry.yarnpkg.com/dom4/-/dom4-2.1.5.tgz#f98a94eb67b340f0fa5b42b0ee9c38cda035428e"
   integrity sha512-gJbnVGq5zaBUY0lUh0LUEVGYrtN75Ks8ZwpwOYvnVFrKy/qzXK4R/1WuLIFExWj/tBxbRAkTzZUGJHXmqsBNjQ==
 
-dompurify@^2.3.6:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.5.tgz#0e89a27601f0bad978f9a924e7a05d5d2cccdd87"
-  integrity sha512-jggCCd+8Iqp4Tsz0nIvpcb22InKEBrGz5dw3EQJMs8HPJDsKbFIO3STYtAvCfDx26Muevn1MHVI0XxjgFfmiSA==
+dompurify@^2.4.7:
+  version "2.4.7"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.7.tgz#277adeb40a2c84be2d42a8bcd45f582bfa4d0cfc"
+  integrity sha512-kxxKlPEDa6Nc5WJi+qRgPbOAbgTpSULL+vI3NUXsZMlkJxTqYI9wg5ZTay2sFrdZRWHPWNi+EdAhcJf81WtoMQ==
 
 electron-to-chromium@^1.3.846:
   version "1.3.849"
@@ -1206,14 +1206,14 @@ mapbox-to-css-font@^2.4.1:
   resolved "https://registry.yarnpkg.com/mapbox-to-css-font/-/mapbox-to-css-font-2.4.2.tgz#a9e31b363ad8ca881cd339ca99f2d2a6b02ea5dd"
   integrity sha512-f+NBjJJY4T3dHtlEz1wCG7YFlkODEjFIYlxDdLIDMNpkSksqTt+l/d4rjuwItxuzkuMFvPyrjzV2lxRM4ePcIA==
 
-mapguide-react-layout@0.14.8-pre.1:
-  version "0.14.8-pre.1"
-  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.14.8-pre.1.tgz#e4e24901dfa86cfb5cc4368fc098c45362a36d90"
-  integrity sha512-3U0/nfDGkQBhz0SAZBV9hzJq6c5B3OPCngmFNWHTM9VMqZdIqkVO0PqURJtAtv2zLCjDEP7QNZCPSA4dp3Cftg==
+mapguide-react-layout@0.14.9:
+  version "0.14.9"
+  resolved "https://registry.yarnpkg.com/mapguide-react-layout/-/mapguide-react-layout-0.14.9.tgz#b9a2c9a60e2da8e8f45ce9a39826cd8d3fc4cbf8"
+  integrity sha512-0ucuH1G14m3+MPhbnuDOWhahs36plPa6NqAvBdFT3FLfoV6Uuv4aeZlWFVuE+QAGF0Czi7/WckDrd5AtjHQniw==
   dependencies:
     "@blueprintjs/core" "^3.53.0"
     colorbrewer "^1.5.3"
-    dompurify "^2.3.6"
+    dompurify "^2.4.7"
     expr-eval "2.0.2"
     geojson-vt "^3.2.1"
     immutability-helper "^3.1.1"
@@ -1229,14 +1229,14 @@ mapguide-react-layout@0.14.8-pre.1:
     react-colorful "^5.6.1"
     react-copy-to-clipboard "^5.1.0"
     react-dom "^17.0.2"
-    react-redux "^7.2.6"
+    react-redux "^7.2.9"
     react-rnd "^10.4.1"
     react-splitter-layout "^4.0.0"
     redux "^4.2.1"
     redux-logger "^3.0.6"
     redux-thunk "^2.4.2"
     stickybits "3.7.11"
-    tslib "^2.5.1"
+    tslib "^2.6.0"
     url-parse "^1.5.10"
 
 merge-stream@^2.0.0:
@@ -1688,7 +1688,7 @@ react-popper@^1.3.7:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-redux@^7.2.6:
+react-redux@^7.2.9:
   version "7.2.9"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.9.tgz#09488fbb9416a4efe3735b7235055442b042481d"
   integrity sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ==
@@ -2071,7 +2071,12 @@ tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
 
-tslib@^2.5.1, tslib@~2.5.0:
+tslib@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.0.tgz#b295854684dbda164e181d259a22cd779dcd7bc3"
+  integrity sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==
+
+tslib@~2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
   integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
